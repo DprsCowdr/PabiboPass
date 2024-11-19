@@ -1,0 +1,192 @@
+
+
+.service-icon {
+    width: 640px;  /* Increase to a higher resolution size */
+    height: 64px; /* Maintain aspect ratio or specify exact dimensions */
+    object-fit: contain;  /* Ensures the image doesn't get stretched out of proportion */
+    image-rendering: crisp-edges; /* Avoids blurriness if the image is scaled up */
+    -webkit-image-rendering: crisp-edges; /* For Safari/older WebKit browsers */
+    -moz-image-rendering: crisp-edges; /* For Firefox */
+}
+
+.active {
+    border: 2px solid #000;
+}
+.favicon {
+    width: 32px;
+    height: 32px;
+    vertical-align: middle;
+    margin-left: 10px;
+}
+/* Base styles */
+body {
+    width: 350px;
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background-color: rgb(0, 0, 0);
+    padding: 20px;
+    position: relative;
+
+}
+
+.small-icon {
+    width: 60px;
+    height: 60px;
+}
+
+
+.container {
+    background-color: rgb(0, 0, 0);
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    overflow: hidden;
+}
+
+.master-lock-container {
+    padding: 20px;
+}
+
+/* Header styles */
+.header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+
+.title {
+    font-size: 18px;
+    font-weight: 600;
+    color: #1a1a1a;
+    margin: 0;
+}
+
+/* Form elements */
+.input-group {
+    margin-bottom: 16px;
+}
+
+.input-label {
+    display: block;
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 8px;
+}
+
+.password-input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #e1e1e1;
+    border-radius: 8px;
+    font-size: 14px;
+    box-sizing: border-box;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.password-input:focus {
+    outline: none;
+    border-color: #000000;
+    box-shadow: 0 0 0 2px rgba(65, 97, 255, 0.1);
+}
+
+/* Error message */
+.error-message {
+    color: #ff4444;
+    font-size: 12px;
+    margin-top: 8px;
+    min-height: 16px;
+    display: block;
+}
+
+/* Button styles */
+.submit-button {
+    width: 100%;
+    padding: 12px;
+    background: #000000;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.submit-button:hover {
+    background: #000000;
+}
+
+.submit-button:active {
+    transform: translateY(1px);
+}
+
+/* Animation */
+.shake {
+    animation: shake 0.5s;
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+    20%, 40%, 60%, 80% { transform: translateX(5px); }
+}
+
+
+
+
+.button-65,
+.button-65s {
+  min-width: 120px;
+
+  position: relative;
+  cursor: pointer;
+
+  padding: 12px 17px;
+  border: 0;
+  border-radius: 7px;
+
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.1);
+  background: radial-gradient(
+    ellipse at bottom,
+    rgba(71, 81, 92, 1) 0%,
+    rgba(11, 21, 30, 1) 45%
+  );
+
+  color: rgb(255, 255, 255, 0.66);
+
+  transition: all 1s cubic-bezier(0.15, 0.83, 0.66, 1);
+}
+
+.button-65::before,
+.button-65s::before {
+  content: "";
+  width: 70%;
+  height: 1px;
+
+  position: absolute;
+  bottom: 0;
+  left: 15%;
+
+  background: rgb(255, 255, 255);
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 1) 50%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  opacity: 0.2;
+
+  transition: all 1s cubic-bezier(0.15, 0.83, 0.66, 1);
+}
+
+.button-65:hover,
+.button-65s:hover {
+  color: rgb(255, 255, 255, 1);
+  transform: scale(1.1) translateY(-3px);
+}
+
+.button-65:hover::before,
+.button-65s:hover::before {
+  opacity: 1;
+}

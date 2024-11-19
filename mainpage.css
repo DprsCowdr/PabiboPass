@@ -1,0 +1,471 @@
+/* mainpage.css */
+body {
+    width: 415px;
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background-color: rgb(0, 0, 0);
+    padding: 20px;
+    position: relative;
+}
+/* Flex container for icon and text */
+.icon-text-container {
+    display: flex;
+    align-items: center; /* Vertically center the image and text */
+    gap: 10px; /* Add space between the icon and text */
+}
+
+/* Image size */
+.small-icon {
+    width: 50px;
+    height: 50px;
+}
+
+
+
+.container {
+    background: white;
+    border-radius: 16px;
+    padding: 20px;
+}
+
+/* Search Bar */
+.search-container {
+    position: relative;
+    margin-bottom: 24px;
+    
+    
+    
+}
+
+#search-input {
+    width: 80%;
+    padding: 12px 40px;
+  
+    border-radius: 12px;
+    background-color: #f8f9ff;
+    font-size: 16px;
+    border-color: #333;
+    border-width: 2px;
+ 
+   
+}
+
+.search-icon {
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 20px;
+    height: 20px;
+    color: #666;
+    
+}
+
+/* Manage Section */
+.manage-section {
+    margin-bottom: 24px;
+}
+
+.subtitle {
+    font-size: 16px;
+    color: #333;
+    margin: 0 0 8px 0;
+}
+
+.title {
+    font-size: 24px;
+    font-weight: bold;
+    margin: 0 0 20px 0;
+}
+
+/* Categories */
+.categories {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+}
+
+.category-card {
+    background: #f8f9ff;
+    padding: 16px;
+    border-radius: 12px;
+}
+
+.category-icon {
+    width: 48px;
+    height: 48px;
+    background: #e8efff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 12px;
+}
+
+.category-icon svg {
+    width: 24px;
+    height: 24px;
+    color: #222222d0;
+}
+
+.category-card h3 {
+    margin: 0 0 4px 0;
+    font-size: 16px;
+}
+
+.category-card p {
+    margin: 0;
+    color: #666;
+    font-size: 14px;
+}
+
+/* Tabs */
+.tabs {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 24px;
+}
+
+
+
+
+
+/* Priority Section */
+.priority-title {
+    color: #222222d0;
+    font-size: 16px;
+    margin-bottom: 16px;
+}
+
+/* Password Items */
+.password-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 16px;
+}
+
+.password-info {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.password-icon {
+    width: 48px;
+    height: 48px;
+    background: #ffffff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.password-details h4 {
+    margin: 0 0 4px 0;
+    font-size: 16px;
+}
+
+.password-details p {
+    margin: 0;
+    color: #666;
+    font-size: 14px;
+}
+
+.copy-button {
+    padding: 8px;
+    border: none;
+    border-radius: 8px;
+    background: transparent;
+    cursor: pointer;
+}
+
+.copy-button:hover {
+    background: #f8f9ff;
+}
+
+.copy-button svg {
+    width: 20px;
+    height: 20px;
+    color: #666;
+}
+.password-actions {
+    display: flex;
+    gap: 8px;
+}
+
+.autofill-button,
+.delete-button {
+    padding: 8px;
+    border: none;
+    border-radius: 8px;
+    background: transparent;
+    cursor: pointer;
+}
+
+.autofill-button:hover,
+.delete-button:hover {
+    background: #f8f9ff;
+}
+
+.autofill-button svg,
+.delete-button svg {
+    width: 20px;
+    height: 20px;
+    color: #666;
+}
+
+.delete-button svg {
+    color: #ff4444;
+}
+
+.custom-input {
+    width: 90%;
+    padding: 10px 12px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 14px;
+    margin-bottom: 8px;
+}
+
+.mb-2 {
+    margin-bottom: 8px;
+}
+
+.mb-4 {
+    margin-bottom: 16px;
+}
+
+.service-buttons {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.service-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    background: white;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.service-btn:hover {
+    background: #f5f5f5;
+    transform: translateY(-2px);
+}
+
+.service-btn.active {
+    color: #222222d0;
+    background: #e8f0fe;
+}
+
+.service-btn img {
+    width: 24px;
+    height: 24px;
+    margin-bottom: 5px;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group input {
+    width: 95%;
+    padding: 10px 12px;
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+}
+
+#save-account {
+    width: 100%;
+    padding: 10px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+#save-account:hover {
+    background-color: #222222d0;
+}
+.button-65,
+.button-65s {
+  min-width: 120px;
+
+  position: relative;
+  cursor: pointer;
+
+  padding: 12px 17px;
+  border: 0;
+  border-radius: 7px;
+
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.1);
+  background: radial-gradient(
+    ellipse at bottom,
+    rgba(71, 81, 92, 1) 0%,
+    rgba(11, 21, 30, 1) 45%
+  );
+
+  color: rgb(255, 255, 255, 0.66);
+
+  transition: all 1s cubic-bezier(0.15, 0.83, 0.66, 1);
+}
+
+.button-65::before,
+.button-65s::before {
+  content: "";
+  width: 70%;
+  height: 1px;
+
+  position: absolute;
+  bottom: 0;
+  left: 15%;
+
+  background: rgb(255, 255, 255);
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 1) 50%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  opacity: 0.2;
+
+  transition: all 1s cubic-bezier(0.15, 0.83, 0.66, 1);
+}
+
+.button-65:hover,
+.button-65s:hover {
+  color: rgb(255, 255, 255, 1);
+  transform: scale(1.1) translateY(-3px);
+}
+
+.button-65:hover::before,
+.button-65s:hover::before {
+  opacity: 1;
+}
+
+
+.show-password-button {
+    background: transparent;
+    border: none;
+    padding: 8px;
+    cursor: pointer;
+    border-radius: 8px;
+}
+
+.show-password-button:hover {
+    background: #f8f9ff;
+}
+
+.show-password-button i {
+    color: #000000;
+}
+#add-account-form {
+    opacity: 0;
+    max-height: 0;
+    overflow: hidden;
+    transition: opacity 0.5s ease, max-height 0.5s ease;
+}
+
+#add-account-form.show {
+    opacity: 1;
+    max-height: 500px; /* Set this to a value larger than the form's height */
+}
+
+/* Flex container for the password generator section */
+.password-generator-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* Generated password field */
+#generated-password-output {
+  
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background-color: #f9f9f9;
+}
+
+.edit-form {
+    padding: 0;
+    background-color: transparent;
+    border-radius: 0;
+    margin-top: 0;
+}
+
+.edit-form input {
+    display: inline;
+    width: auto;
+    margin: 0;
+    padding: 0;
+    border: none;
+    border-radius: 0;
+    background-color: transparent;
+    outline: none;
+    color: inherit;
+}
+
+.edit-form button {
+    padding: 0;
+    border: none;
+    border-radius: 0;
+    background: transparent;
+    cursor: pointer;
+    margin-right: 8px;
+    color: inherit;
+}
+
+.save-edit-button {
+    background-color: transparent;
+    color: #4CAF50;
+}
+
+.cancel-edit-button {
+    background-color: transparent;
+    color: #f44336;
+}
+
+.edit-button {
+    padding: 0;
+    border: none;
+    border-radius: 0;
+    background: transparent;
+    cursor: pointer;
+}
+
+.edit-button:hover {
+    background: transparent;
+}
+
+.edit-button i {
+    color: inherit;
+}
+
+
+
+
+.favorite-button {
+    background: transparent;
+    border: none;
+    padding: 8px;
+    cursor: pointer;
+    border-radius: 8px;
+}
+
+.favorite-button-button:hover {
+    background: #f8f9ff;
+}
+
+.favorite-button i {
+    color: #000000;
+}

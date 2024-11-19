@@ -1,0 +1,40 @@
+{
+  "manifest_version": 3,
+  "name": "Pabibo Pass",
+  "version": "1.0",
+  "description": "A simple Chrome extension to manage and save account credentials.",
+  "permissions": [
+    "storage",
+    "tabs",
+   
+    "scripting",
+    "activeTab",
+    "webNavigation" 
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": "icons/icon128.png"
+  },
+  "icons": {
+    "48": "icons/icon128.png",
+    "128": "icons/icon128.png"
+  },
+  "host_permissions": [
+    "*://*/*"
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["mainpage.html", "icons/icon128.png"],
+      "matches": ["<all_urls>"]
+    }
+  ],
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content_script.js"]
+    }
+  ],
+  "background": {
+    "service_worker": "background.js"
+  }
+}

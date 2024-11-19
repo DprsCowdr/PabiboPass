@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="popup.css"> <!-- Link to your custom CSS -->
+    <title>Master Lock</title>
+</head>
+<body class="flex items-center justify-center min-h-screen">
+    <div class="rounded-lg p-6 bg-white shadow-lg w-80"> <!-- Main container -->
+        <div id="master-lock-container" class="flex flex-col gap-4"> <!-- Input container -->
+            <!-- Header with SVG icon -->
+            <div class="flex items-center gap-4">
+                <div class=""> <!-- Circle around icon -->
+                    <img src="icons/icon128.png" alt="PabiboPass" class="small-icon">
+                      
+                </div>
+                <h2 class="text-lg font-semibold text-gray-800">PabiboPass Manager</h2> <!-- Title -->
+            </div>
+
+            <!-- Master Password Input -->
+            <div class="input-group">
+                <label class="input-label text-gray-600" for="master-lock">Master Password</label>
+                <input type="password" id="master-lock" class="password-input w-full p-2 border rounded-lg" placeholder="Enter your master password">
+            </div>
+
+            <!-- Confirm Password Input (Initially visible) -->
+            <div id="confirm-container">
+                <div class="input-group">
+                    <label class="input-label text-gray-600" for="confirm-lock">Confirm Master Password</label>
+                    <input type="password" id="confirm-lock" class="password-input w-full p-2 border rounded-lg" placeholder="Confirm your master password">
+                </div>
+            </div>
+
+            <!-- Error Message -->
+            <p id="error-message" class="text-red-500 text-sm"></p>
+
+            <!-- Submit Button -->
+            <button id="submit-lock" class="button-65">
+                Unlock
+            </button>
+        </div>
+    </div>
+
+    <script src="popup.js"></script> <!-- Link to your JavaScript file -->
+</body>
+</html>
