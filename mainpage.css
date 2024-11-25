@@ -139,16 +139,19 @@ body {
 
 /* Password Items */
 .password-item {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 16px;
     margin-bottom: 16px;
+    align-items: center;
+    min-width: 0; /* Prevents grid from expanding */
 }
 
 .password-info {
     display: flex;
     align-items: center;
     gap: 16px;
+    min-width: 0; /* Allows text truncation to work */
 }
 
 .password-icon {
@@ -164,15 +167,25 @@ body {
     font-size: 20px;
 }
 
+.password-details {
+    min-width: 0; /* Allows text truncation to work */
+    flex: 1;
+}
 .password-details h4 {
     margin: 0 0 4px 0;
     font-size: 16px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .password-details p {
     margin: 0;
     color: #666;
     font-size: 14px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .copy-button {
@@ -195,17 +208,25 @@ body {
 .password-actions {
     display: flex;
     gap: 8px;
+    flex-shrink: 0; /* Prevents the actions from shrinking */
 }
 
 .autofill-button,
-.delete-button {
-    padding: 8px;
+.delete-button,
+.copy-button,
+.favorite-button,
+.show-password-button,
+.edit-button {
+  
     border: none;
-    border-radius: 8px;
+   
     background: transparent;
     cursor: pointer;
+    flex-shrink: 0; /* Prevents buttons from shrinking */
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
-
 .autofill-button:hover,
 .delete-button:hover {
     background: #f8f9ff;
