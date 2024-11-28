@@ -157,23 +157,19 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Helper function to get service icon   <img src="${serviceIcon}" alt="service icon" class="service-icon" style="width: 30px; height: 30px;">
 
-    function getServiceIcon(url) {
-        // Local icon mappings for predefined services
-        if (url.includes('facebook.com')) return 'icons/facebook.png';
-        if (url.includes('gmail.com')) return 'icons/gmail.png';
-        if (url.includes('instagram.com')) return 'icons/instagram.png';
-        if (url.includes('twitter.com')) return 'icons/twitter.png';
-        if (url.includes('linkedin.com')) return 'icons/linkedin.png';
-    
-        // Fetch the favicon from the Google Favicon API for custom URLs
-        try {
-            const faviconUrl = `https://www.google.com/s2/favicons?domain=${url}&size=64`;
-            return faviconUrl;
-        } catch (error) {
-            console.error('Error fetching favicon:', error);
-            return 'icons/custom.png'; // Fallback to a default icon
-        }
-    }
+// Helper function to get service icon
+function getServiceIcon(url) {
+    // Local icon mappings for predefined services
+    if (url.includes('facebook.com')) return 'icons/facebook.png';
+    if (url.includes('gmail.com')) return 'icons/gmail.png';
+    if (url.includes('instagram.com')) return 'icons/instagram.png';
+    if (url.includes('twitter.com')) return 'icons/twitter.png';
+    if (url.includes('linkedin.com')) return 'icons/linkedin.png';
+
+    // Fetch the favicon from the Google Favicon API for custom URLs
+    return `https://www.google.com/s2/favicons?domain=${url}&size=64`;
+}
+
     
 
     function addButtonEventListeners() {
