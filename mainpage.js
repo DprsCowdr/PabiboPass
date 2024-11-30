@@ -130,7 +130,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 accountList.innerHTML = `<p>No ${filter} accounts found.</p>`;
                 return;
             }
-    
+    //done
             filteredAccounts.forEach((account, index) => {
                 const accountItem = document.createElement('div');
                 accountItem.classList.add('password-item');
