@@ -11,9 +11,10 @@
 <body>
 <!-- Main Container -->
 <div class="container">
+  
 
     <!-- Header Section with Icon and Title -->
-     <br><br><br>     <br><br><br>
+     
     <div class="icon-text-container">
         <img src="icons/icon128.png" alt="PabiboPass" class="small-icon">
         <h2>PabiboPass</h2>
@@ -24,7 +25,7 @@
         
         <h2>Password Generator</h2>
         <div class="password-generator-container">
-            <button id="generate-password-button" class="button-65" type="button">Generate Password</button>
+            <button id="generate-password-button" class="button-65" type="button">Generate </button>
             <input type="text" id="generated-password-output" readonly placeholder="Generated password" />
             <button id="copy-password-button" class="copy-button" type="button">
                 <i class="fa-solid fa-copy"></i>
@@ -45,10 +46,12 @@
     <div class="manage-section">
         <h2 class="subtitle">Manage</h2>
 
+
+        
         <!-- Manage Buttons -->
         <button id="add-account-button" class="button-65" role="button">Add</button>
         <button id="logout-button" class="button-65">Logout</button>
-        <button id="delete-all-button" class="button-65">Delete Account</button>
+        <button id="delete-all-button" class="button-65"> Delete All   </button>
 
         <!-- Add Account Form -->
         <div id="add-account-form" class="mb-4" style="display:none;">
@@ -92,14 +95,41 @@
         </div>
 
         <!-- Accounts Section -->
+  
         <h1 class="title">Accounts</h1>
         <div class="passwords-section">
 
             <!-- Tabs for Account Filters -->
             <div class="tabs">
                 <button class="button-65s" data-tab="all">All</button>
-                <button class="button-65s" data-tab="frequent">Frequent</button>
                 <button class="button-65s" data-tab="favorites">Favorites</button>
+                <button id="cate-button" class="button-65s">Category</button>
+                <input type="checkbox" id="touch" style="display:none;">
+
+
+                <ul class="slide">
+                    <!-- Tabs for Account Filters -->
+                    <div class="tabs-horizontal">
+                        <button class="tab-item" data-tab="facebook">
+                            <img src="icons/facebook.png" alt="Facebook">
+                        </button>
+                        <button class="tab-item" data-tab="gmail">
+                            <img src="icons/gmail.png" alt="Gmail">
+                        </button>
+                        <button class="tab-item" data-tab="instagram">
+                            <img src="icons/instagram.png" alt="Instagram">
+                        </button>
+                        <button class="tab-item" data-tab="twitter">
+                            <img src="icons/twitter.png" alt="Twitter">
+                        </button>
+                        <button class="tab-item" data-tab="linkedin">
+                            <img src="icons/linkedin.png" alt="LinkedIn">
+                        </button>
+                        <button class="tab-item" data-tab="custom">
+                            <img src="icons/custom.png" alt="Custom">
+                        </button>
+                    </div>
+                </ul>
             </div>
 
             <!-- Priority Section -->

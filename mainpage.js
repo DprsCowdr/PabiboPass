@@ -1,20 +1,37 @@
 // mainpage.js
 document.addEventListener('DOMContentLoaded', function() {
-    // Tab switching functionality
-    const tabs = document.querySelectorAll('.button-65s');
+    // Modify the existing tab switching functionality
+    const tabs = document.querySelectorAll('.button-65s, .tabs .active,.tab-item');
+
     tabs.forEach(tab => {
         tab.addEventListener('click', () => {
+            // Remove active class from all tabs
             tabs.forEach(t => t.classList.remove('active'));
+            
+            // Add active class to clicked tab
             tab.classList.add('active');
-            loadAccounts(tab.dataset.tab);
+            
+            // Get the tab's data attribute
+            const filter = tab.dataset.tab || tab.textContent.toLowerCase();
+            
+            // Load accounts with the specific filter
+            loadAccounts(filter);
         });
     });
+
+
+    document.getElementById('cate-button').addEventListener('click', () => {
+        const touchCheckbox = document.getElementById('touch');
+        touchCheckbox.checked = !touchCheckbox.checked; // Toggle the checkbox state
+    });
+
 
     function addFavoriteEventListeners() {
         const favoriteButtons = document.querySelectorAll('.favorite-button');
         
         favoriteButtons.forEach(button => {
             button.addEventListener('click', (e) => {
+                e.stopPropagation();
                 const index = e.currentTarget.getAttribute('data-index');
                 const icon = button.querySelector('i');
     
@@ -54,6 +71,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
+    
     // Service button functionality
     const serviceButtons = document.querySelectorAll('.service-btn');
     const urlInput = document.querySelector('.url-input');
@@ -86,74 +104,90 @@ document.addEventListener('DOMContentLoaded', function() {
                 accountList.innerHTML = '<p>No accounts stored yet.</p>';
                 return;
             }
-
+        
             let filteredAccounts = storedAccounts;
-            if (filter === 'frequent') {
-                filteredAccounts = storedAccounts.slice(0, 5);
-            } else if (filter === 'favorites') {
+    
+            // Add service filtering
+            if (['facebook', 'instagram', 'gmail', 'twitter', 'linkedin'].includes(filter)) {
+                filteredAccounts = storedAccounts.filter(account => {
+                    const url = account.url.toLowerCase();
+                    return url.includes(filter);
+                });
+            } else if (filter === 'custom') {
+                // Filter for accounts that do not match known services
+                filteredAccounts = storedAccounts.filter(account => {
+                    const url = account.url.toLowerCase();
+                    // Check that the URL does not match any predefined service URLs
+                    return !['facebook', 'instagram', 'gmail', 'twitter', 'linkedin'].some(service => url.includes(service));
+                });
+            } else if (filter === 'favorites' || filter === 'favorite') {
                 filteredAccounts = storedAccounts.filter(account => account.favorite);
+            } else if (filter === 'frequent') {
+                filteredAccounts = storedAccounts.slice(0, 5);
             }
-
+    
+            if (filteredAccounts.length === 0) {
+                accountList.innerHTML = `<p>No ${filter} accounts found.</p>`;
+                return;
+            }
+    
             filteredAccounts.forEach((account, index) => {
                 const accountItem = document.createElement('div');
                 accountItem.classList.add('password-item');
                 
-                console.log('Account URL:', account.url); // This will log the URL of each account
                 const serviceIcon = getServiceIcon(account.url);
                 
                 accountItem.innerHTML = `
-
-                
-                   <div class="password-info">
-                <div class="password-icon">
-                  
-                 <img src="${serviceIcon}" alt="service icon" class="service-icon" style="width: 30px; height: 30px;">
+                <div class="password-info">
+                    <div class="password-icon">
+                        <img src="${serviceIcon}" alt="service icon" class="service-icon" style="width: 30px; height: 30px;">
+                    </div>
+                    <div class="password-details" id="details-${index}">
+                        <h4>${account.username}</h4>
+                        <p>${account.url}</p>
+                        <p class="password-field" id="password-${index}" data-visible="false">
+                            ${'*'.repeat(account.password.length)}
+                        </p>
+                    </div>
+                    <div class="edit-form" id="edit-form-${index}" style="display: none;">
+                        <input type="text" class="edit-username" value="${account.username}" placeholder="Username">
+                        <input type="text" class="edit-url" value="${account.url}" placeholder="URL">
+                        <input type="password" class="edit-password" id="edit-password-${index}" value="${account.password}" placeholder="Password">
+                        <div>
+                            <button class="save-edit-button" data-index="${index}">Save</button>
+                            <button class="cancel-edit-button" data-index="${index}">Cancel</button>
+                        </div>
+                    </div>
                 </div>
-              <div class="password-details" id="details-${index}">
-    <h4>${account.username}</h4>
-    <p>${account.url}</p>
-    <p class="password-field" id="password-${index}" data-visible="false">
-        ${'*'.repeat(account.password.length)}
-    </p>
-</div>
-                <div class="edit-form" id="edit-form-${index}" style="display: none;">
-    <input type="text" class="edit-username" value="${account.username}" placeholder="Username">
-    <input type="text" class="edit-url" value="${account.url}" placeholder="URL">
-    <input type="password" class="edit-password" id="edit-password-${index}" value="${account.password}" placeholder="Password">
-    <div>
-    <button class="save-edit-button" data-index="${index}"> Save </button>
-    <button class="cancel-edit-button" data-index="${index}">Cancel</button>
-    </div>
-</div>
-            </div>
-            <div class="password-actions">
-                <button class="show-password-button" data-index="${index}">
-                    <i class="fa-solid fa-eye-slash"></i>
-                </button>
-                <button class="edit-button" data-index="${index}">
-                    <i class="fa-solid fa-pen"></i>
-                </button>
-                <button class="autofill-button" data-index="${index}">
-                    <i class="fa-solid fa-fill"></i>
-                </button>
-                <button class="delete-button" data-index="${index}">
-                    <i class="fa-solid fa-trash"></i>
-                </button>
-
-                <button class="favorite-button" data-index="${index}">
-                    <i class="${account.favorite ? 'fa-solid fa-star' : 'fa-regular fa-star'}"></i>
-                </button>
-            </div>
+                <div class="password-actions">
+                    <button class="show-password-button" data-index="${index}">
+                        <i class="fa-solid fa-eye-slash"></i>
+                    </button>
+                    <button class="edit-button" data-index="${index}">
+                        <i class="fa-solid fa-pen"></i>
+                    </button>
+                    <button class="autofill-button" data-index="${index}">
+                        <i class="fa-solid fa-fill"></i>
+                    </button>
+                    <button class="delete-button" data-index="${index}">
+                        <i class="fa-solid fa-trash"></i>
+                    </button>
+                    <button class="favorite-button" data-index="${index}">
+                        <i class="${account.favorite ? 'fa-solid fa-star' : 'fa-regular fa-star'}"></i>
+                    </button>
+                </div>
                 `;
                 accountList.appendChild(accountItem);
             });
-
+    
+            // Reattach all event listeners
             addButtonEventListeners();
             addShowPasswordEventListeners();
             addEditEventListeners();
             addFavoriteEventListeners();
         });
     }
+    
 
     // Helper function to get service icon   <img src="${serviceIcon}" alt="service icon" class="service-icon" style="width: 30px; height: 30px;">
 
@@ -167,7 +201,9 @@ function getServiceIcon(url) {
     if (url.includes('linkedin.com')) return 'icons/linkedin.png';
 
     // Fetch the favicon from the Google Favicon API for custom URLs
-    return `https://www.google.com/s2/favicons?domain=${url}&size=64`;
+    return `https://logo.clearbit.com/${url}?size=64
+`;
+    
 }
 
     
@@ -268,6 +304,7 @@ function getServiceIcon(url) {
             alert("Username or password fields not found on this page.");
         }
     }
+    
     
     // Handle "Add Account" button click
     document.getElementById("add-account-button").addEventListener("click", function() {

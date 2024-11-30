@@ -1,24 +1,89 @@
-/* General Styles */
-body {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  background-color: #f5f5f5;
+/* mainpage.css */
+
+ul.slide {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 3 columns */
+    grid-gap: 10px; /* Space between items */
+    list-style-type: none;
+    padding: 0;
 }
 
-.container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  background-color: white;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  padding: 40px;
-  width: 350px;
+ul.slide li {
+    text-align: center;
 }
+
+ul.slide a {
+    display: block;
+    padding: 10px;
+    background-color: #f1f1f1;
+    border-radius: 5px;
+    text-decoration: none;
+    color: #333;
+    font-weight: bold;
+}
+
+ul.slide a:hover {
+    background-color: #ccc;
+}
+  
+  .slide {
+    clear: both;
+    width: 100%;
+    height: 0px;
+    overflow: hidden;
+    text-align: center;
+    transition: height 0.4s ease;
+  }
+  
+  .slide li {
+    padding: 5px;
+  }
+  
+  #touch {
+    display: none;
+  }
+  
+  
+  #touch:checked + .slide {
+    height: 100px; /* Expand the dropdown when checked */
+  }
+  
+  #touch:checked + .slide + label .custom-span::after {
+    content: "-"; /* Change the icon when checked */
+  }
+
+  
+body {
+    width: 396px;
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background-color: rgb(255, 255, 255);
+    padding: 20px;
+    position: relative;
+}
+/* Flex container for icon and text */
+.icon-text-container {
+    display: flex;
+    align-items: center; /* Vertically center the image and text */
+    gap: 10px; /* Add space between the icon and text */
+}
+
+/* Image size */
+.small-icon {
+    width: 50px;
+    height: 50px;
+}
+
+
+
+.container {
+    background: white;
+    border-radius: 16px;
+    padding: 20px;
+}
+
+
+
 .icon-text-container {
     display: flex;
     align-items: center;
@@ -26,11 +91,19 @@ body {
     flex-wrap: nowrap; /* Prevents wrapping */
 }
 
+.icon-text-container h2 {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
 
 .small-icon {
-  width: 50px;
-  height: 50px;
+    width: 50px;
+    height: 50px;
+    object-fit: contain;
 }
+
 
 /* Search Bar */
 .search-container {
@@ -45,10 +118,38 @@ body {
     border-radius: 12px;
     background-color: #f8f9ff;
     font-size: 16px;
-    border: 2px solid #333; /* Unified shorthand for border color and width */
+    border: 2px solid #000000; /* Unified shorthand for border color and width */
     box-sizing: border-box; /* Ensures padding doesn't overflow */
   }
   
+  /* Remove blue outline for input fields when focused */
+input:focus {
+    outline: none; /* Removes the default focus outline */
+    border-color: #ccc; /* Optional: Add a custom border color */
+    box-shadow: none; /* Removes any shadow effects */
+}
+
+/* Optional: Add a custom focus effect */
+input:focus {
+    border: 2px solid #333; /* Custom border color on focus */
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.2); /* Subtle shadow effect */
+}
+
+/* Hide the scrollbar while still allowing scrolling */
+body {
+    overflow-y: scroll; /* Ensure scrolling is possible */
+}
+
+::-webkit-scrollbar {
+    display: none; /* Hides the scrollbar for Webkit browsers */
+}
+
+/* Hide scrollbar for Firefox */
+body {
+    scrollbar-width: none; /* Firefox-specific property */
+    -ms-overflow-style: none; /* IE and Edge */
+}
+
   .search-icon {
     position: absolute;
     left: 12px;
@@ -62,9 +163,6 @@ body {
   
 
 /* Manage Section */
-.manage-section {
-  margin-bottom: 24px;
-}
 
 .subtitle {
   font-size: 16px;
@@ -75,7 +173,7 @@ body {
 .title {
   font-size: 24px;
   font-weight: bold;
-  margin: 0 0 20px 0;
+  margin: 20px 0 20px 0;
 }
 
 /* Categories */
@@ -120,10 +218,42 @@ body {
 }
 
 /* Tabs */
+
 .tabs {
-  display: flex;
-  gap: 8px;
-  margin-bottom: 24px;
+
+    gap: 10px; /* Add spacing between buttons */
+}
+
+.tab-item:hover {
+    background-color: #e0e0e0;
+}
+
+/* Container for horizontal layout */
+.tabs-horizontal {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    padding: 10px;
+}
+
+/* Buttons */
+.tab-item {
+    width: 40px; /* Smaller button size */
+    height: 40px;
+    background-color: transparent; /* No background */
+    border: none; /* Remove borders */
+    cursor: pointer;
+    display: flex;
+    justify-content: center; /* Center image horizontally */
+    align-items: center; /* Center image vertically */
+}
+
+/* Icons inside buttons */
+.tab-item img {
+    width: 30px; /* Icon width */
+    height: 30px; /* Icon height */
+    object-fit: contain; /* Keep aspect ratio */
 }
 
 /* Priority Section */
@@ -297,8 +427,8 @@ body {
 }
 
 .form-group input {
-  width: 95%;
-  padding: 10px 12px;
+  width: 87%;
+  padding: 10px 19px;
   border: 1px solid #e0e0e0;
   border-radius: 4px;
 }
@@ -313,19 +443,23 @@ body {
 #save-account:hover {
   background-color: #222222d0;
 }
+label[for="touch"] {
+    display: inline-block;
+    text-align: center;
+}
 
 .button-65,
-.button-65s {
-  min-width: 120px;
-  padding: 12px 17px;
-  border-radius: 7px;
+.button-65s{
+  min-width: 80px;
+  padding: 10px 30px;
+  border-radius: 10px;
   background: radial-gradient(
     ellipse at bottom,
     rgba(71, 81, 92, 1) 0%,
     rgba(11, 21, 30, 1) 45%
   );
   color: rgba(255, 255, 255, 0.66);
-  transition: all 0.3s ease;
+  transition: all 0.5s ease;
 }
 
 .button-65::before,
@@ -395,10 +529,10 @@ body {
 
 #generated-password-output {
   flex-grow: 1;
-  padding: 12px;
-  font-size: 16px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
+  padding: 10px;
+  font-size: 15px;
+  border: 2px solid #ddd;
+  border-radius: 7px;
   background-color: #f9f9f9;
 }
 
@@ -472,3 +606,7 @@ body {
 .favorite-button i {
   color: #000000;
 }
+
+
+
+
