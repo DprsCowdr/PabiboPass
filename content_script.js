@@ -1,6 +1,14 @@
-// Function to identify login forms based on common patterns
+
+// Function to identify login forms based on platform-specific patterns
 function findLoginForm() {
     const formSelectors = [
+        // Platform-specific selectors
+        'form[action*="x.com"]',       
+        'form[action*="twitter.com"]',
+        'form[action*="instagram.com"]', 
+        'form[action*="accounts.google.com"]', 
+        
+        // Existing generic selectors
         'form[action*="login"]',
         'form[action*="signin"]',
         'form[action*="auth"]',
@@ -8,9 +16,8 @@ function findLoginForm() {
         'form[id*="signin"]',
         'form[class*="login"]',
         'form[class*="signin"]',
-        'form[id="loginForm"]',
-        'form[action*="identifier"]',  // Specific for Gmail login pages
-        'form' // fallback to any form
+        'form[action*="identifier"]', 
+        'form' 
     ];
 
     for (const selector of formSelectors) {
@@ -23,14 +30,25 @@ function findLoginForm() {
     return null;
 }
 
-// Function to find username/email input
+
 function findUsernameInput(form) {
     const usernameSelectors = [
-        'input[name="session_key"]',  // LinkedIn specific
-        'input[id="username"]',        // LinkedIn specific
-        'input[name="username"]',      // Instagram specific
-          'input[name="identifier"]',     // Gmail specific 
-        'input[type="email"]',
+       
+        'input[name="text"]',          
+        'input[autocomplete="username"]',
+        
+        // Instagram selectors
+        'input[name="username"]',        // Instagram username field
+        'input[name="emailOrPhone"]',    // Instagram alternate field
+        
+        // Gmail/Google selectors
+        'input[type="email"]',           // Google email field
+        'input[name="identifier"]',      // Google identifier field
+        'input#identifierId',            // Google specific ID
+        
+        // Existing broad selectors
+        'input[name="session_key"]',     // LinkedIn specific
+        'input[id="username"]',           // Generic username
         'input[type="text"][name*="email"]',
         'input[type="text"][name*="user"]',
         'input[name*="login"]',
@@ -38,7 +56,6 @@ function findUsernameInput(form) {
         'input[id*="email"]',
         'input[id*="user"]',
         'input[id*="login"]',
-        'input[autocomplete="username"]',
         'input[autocomplete="email"]'
     ];
 
@@ -53,11 +70,20 @@ function findUsernameInput(form) {
     return null;
 }
 
-// Function to find password input
+// Function to find password input with platform-specific selectors
 function findPasswordInput(form) {
     const passwordSelectors = [
-        'input[type="password"]',
-        'input[name="password"]',
+        // Platform-specific selectors
+        // X (Twitter) selectors
+        'input[name="password"]',        // X login password field
+        
+        // Instagram selectors
+        'input[type="password"]',        // Instagram password field
+        
+        // Gmail/Google selectors
+        'input[type="password"][name="password"]', // Google password field
+        
+        // Existing selectors
         'input[name*="pass"]',
         'input[id*="pass"]',
         'input[autocomplete="current-password"]'
@@ -73,28 +99,33 @@ function findPasswordInput(form) {
     console.log("Password input not found");
     return null;
 }
-
-// Function to prompt user to save credentials
 function promptSaveCredentials(username, password, url) {
     console.log('Attempting to save credentials:', { username, password, url });
     
-    const userConfirmed = confirm(`Do you want to save your credentials for ${url}?`);
+    // Normalize the URL
+    const normalizedUrl = url.replace(/^www\./, '').toLowerCase();
+    
+    const userConfirmed = confirm(`Do you want to save your credentials for ${normalizedUrl}?`);
     
     if (userConfirmed) {
-        chrome.runtime.sendMessage({ 
-            type: 'saveCredentials',
-            data: {
-                username, 
-                password, 
-                url: window.location.hostname
-            }
-        }, (response) => {
-            if (response && response.success) {
-                console.log("Credentials saved successfully");
-            } else {
-                console.log("Failed to save credentials");
-            }
-        });
+        try {
+            chrome.runtime.sendMessage({ 
+                type: 'saveCredentials',
+                data: {
+                    username, 
+                    password, 
+                    url: normalizedUrl
+                }
+            }, (response) => {
+                if (response && response.success) {
+                    console.log("Credentials saved successfully");
+                } else {
+                    console.error("Failed to save credentials:", response);
+                }
+            });
+        } catch (error) {
+            console.error("Error sending save credentials message:", error);
+        }
     }
 }
 
@@ -111,7 +142,19 @@ function handleFormSubmit(event) {
             const password = passwordInput.value;
 
             if (username && password) {
-                promptSaveCredentials(username, password, window.location.hostname);
+                // Special handling for different platforms
+                let normalizedUrl = window.location.hostname;
+                
+                // Normalize URLs for specific platforms
+                if (normalizedUrl.includes('github.com') || normalizedUrl.includes('github.com')) {
+                    normalizedUrl = 'github.com';
+                } else if (normalizedUrl.includes('instagram.com')) {
+                    normalizedUrl = 'instagram.com';
+                } else if (normalizedUrl.includes('accounts.google.com')) {
+                    normalizedUrl = 'gmail.com';
+                }
+
+                promptSaveCredentials(username, password, normalizedUrl);
             } else {
                 console.log("Username or Password field is empty");
             }
@@ -170,3 +213,5 @@ if (document.body) {
         subtree: true
     });
 }
+
+

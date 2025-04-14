@@ -9,55 +9,79 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 <body>
-<!-- Main Container -->
-<div class="container">
-  
+   <!-- Main Container -->
+    <div class="container">
 
-    <!-- Header Section with Icon and Title -->
-     
-    <div class="icon-text-container">
-        <img src="icons/icon128.png" alt="PabiboPass" class="small-icon">
-        <h2>PabiboPass</h2>
-    </div>
+        <!-- Header Section -->
+        <div class="icon-text-container">
+            <img src="icons/icon128.png" alt="PabiboPass" class="small-icon">
+            <h2>PabiboPass</h2>
+          
 
-    <!-- Password Generator Section -->
-    <div id="password-generator-section" class="mb-4">
-        
-        <h2>Password Generator</h2>
-        <div class="password-generator-container">
-            <button id="generate-password-button" class="button-65" type="button">Generate </button>
-            <input type="text" id="generated-password-output" readonly placeholder="Generated password" />
-            <button id="copy-password-button" class="copy-button" type="button">
-                <i class="fa-solid fa-copy"></i>
-            </button>
+    
         </div>
-    </div>
-
-    <!-- Search Account Section -->
-    <div class="search-container">
-        <input type="text" id="search-input" placeholder="Search Account..">
-        <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <circle cx="11" cy="11" r="8"></circle>
-            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-        </svg>
-    </div>
-
-    <!-- Manage Section -->
-    <div class="manage-section">
-        <h2 class="subtitle">Manage</h2>
-
-
+        <br><br>
+        <div id="master-password-section">
+            <!-- Master Password Toggle -->
+            <input type="checkbox" id="master-password-toggle" style="display: none;">
+            <label for="master-password-toggle" class="button-65">
+                <i class="fa-solid fa-key"></i>
+            </label>
         
-        <!-- Manage Buttons -->
-        <button id="add-account-button" class="button-65" role="button">Add</button>
-        <button id="logout-button" class="button-65">Logout</button>
-        <button id="delete-all-button" class="button-65"> Delete All   </button>
+            <!-- Master Password Change Form -->
+            <div id="master-password-change-form" class="slide">
+                <input type="password" id="current-master-password" placeholder="Enter current master password">
+                <input type="password" id="new-master-password" placeholder="Enter new master password">
+                <input type="password" id="confirm-new-master-password" placeholder="Confirm new master password">
+                <button id="save-new-password-btn" class="button-65">Save New Password</button>
+            </div>
+        </div>
+        <!-- Password Generator Section -->
+        <div class="accSec">
+         <div id="password-generator-section">
+            <h2>Password Generator</h2>
+            <div class="password-generator-container">
+                <button id="generate-password-button" class="button-65" type="button">
+                    <i class="fa-solid fa-shuffle"></i>
+                </button>
+                <input type="text" id="generated-password-output" readonly placeholder="Generated password" />
+                <button id="copy-password-button" class="copy-button" type="button">
+                    <i class="fa-solid fa-copy"></i>
+                </button>
+            </div>
+         </div>
+        </div>
+
+
+      
+
+        <!-- Search Account Section -->
+        <div class="search-container">
+            <input type="text" id="search-input" placeholder="Search Account..">
+            <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+        </div>
+
+        <!-- Manage Section -->
+        <div class="manage-section">
+            <h2 class="subtitle">Manage</h2>
+            <div class="manage-buttons">
+                <button id="add-account-button" class="button-65"> <i class="fa-solid fa-user-plus"></i></button>
+                <button id="logout-button" class="button-65"><i class="fa-solid fa-right-from-bracket"></i></button>
+                <button id="delete-all-button" class="button-65">  <i class="fa-solid fa-user-minus"></i></button>
+                <button id="clear-storage-btn" class="button-65">
+                    <i class="fa-solid fa-trash"></i>
+                </button>
+            
+            </div>
+
+    
 
         <!-- Add Account Form -->
-        <div id="add-account-form" class="mb-4" style="display:none;">
+        <div id="add-account-form" style="display:none;">
             <h2>Add New Account</h2>
-
-            <!-- Service Buttons -->
             <div class="service-buttons">
                 <button class="service-btn" data-url="https://facebook.com">
                     <img src="icons/facebook.png" alt="Facebook"> Facebook
@@ -68,8 +92,8 @@
                 <button class="service-btn" data-url="https://instagram.com">
                     <img src="icons/instagram.png" alt="Instagram"> Instagram
                 </button>
-                <button class="service-btn" data-url="https://twitter.com">
-                    <img src="icons/twitter.png" alt="Twitter"> X
+                <button class="service-btn" data-url="https://github.com">
+                    <img src="icons/github.png" alt="Github"> Github
                 </button>
                 <button class="service-btn" data-url="https://linkedin.com">
                     <img src="icons/linkedin.png" alt="LinkedIn"> LinkedIn
@@ -78,37 +102,29 @@
                     <img src="icons/custom.png" alt="Custom"> Custom
                 </button>
             </div>
-
-            <!-- Input Fields for Adding Account -->
             <div class="form-group">
                 <input type="text" id="account-username" placeholder="Username">
-            </div>
-            <div class="form-group">
                 <input type="password" id="account-password" placeholder="Password">
+                <div class="url-input" style="display:none;">
+                    <input type="text" id="account-url" placeholder="URL">
+                </div>
             </div>
-            <div class="form-group url-input" style="display:none;">
-                <input type="text" id="account-url" placeholder="URL">
-            </div>
-
-            <!-- Save Button -->
             <button id="save-account" class="button-65">Save Account</button>
         </div>
 
+
         <!-- Accounts Section -->
-  
-        <h1 class="title">Accounts</h1>
-        <div class="passwords-section">
-
-            <!-- Tabs for Account Filters -->
+        <div class="accounts-section">
+            <h1 class="title">Accounts</h1>
             <div class="tabs">
+                
                 <button class="button-65s" data-tab="all">All</button>
+                <button id="cate-button" class="button-65s">List</button>
                 <button class="button-65s" data-tab="favorites">Favorites</button>
-                <button id="cate-button" class="button-65s">Category</button>
+           
+      
                 <input type="checkbox" id="touch" style="display:none;">
-
-
                 <ul class="slide">
-                    <!-- Tabs for Account Filters -->
                     <div class="tabs-horizontal">
                         <button class="tab-item" data-tab="facebook">
                             <img src="icons/facebook.png" alt="Facebook">
@@ -119,8 +135,8 @@
                         <button class="tab-item" data-tab="instagram">
                             <img src="icons/instagram.png" alt="Instagram">
                         </button>
-                        <button class="tab-item" data-tab="twitter">
-                            <img src="icons/twitter.png" alt="Twitter">
+                        <button class="tab-item" data-tab="github">
+                            <img src="icons/github.png" alt="Github">
                         </button>
                         <button class="tab-item" data-tab="linkedin">
                             <img src="icons/linkedin.png" alt="LinkedIn">
@@ -131,19 +147,17 @@
                     </div>
                 </ul>
             </div>
-
-            <!-- Priority Section -->
             <div class="priority-section">
-                <h3 class="priority-title">Priority</h3>
+             
                 <div id="password-list">
                     <!-- Password items will be dynamically added here -->
                 </div>
             </div>
         </div>
-    </div>
-</div>
 
-<!-- Linking JavaScripts -->
+    </div>
+
+<!-- Linking JavaScript -->
 <script src="mainpage.js"></script>
 </body>
 </html>

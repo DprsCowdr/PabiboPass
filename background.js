@@ -6,43 +6,40 @@ let currentExtensionId = null;
 chrome.runtime.onInstalled.addListener(() => {
     currentExtensionId = chrome.runtime.id;
     
-    // Clear any old extension data
-    chrome.storage.local.clear(() => {
-        console.log('Extension storage cleared on install/update');
-    });
+   
+    
 });
-
-// Listen for messages from content script
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
-  if (message.type === 'saveCredentials') {
-      chrome.storage.local.get(['accounts'], (result) => {
-          if (chrome.runtime.lastError) {
-              console.error("Error getting accounts:", chrome.runtime.lastError);
-              sendResponse({ success: false, error: chrome.runtime.lastError.message });
-              return;
-          }
-
-          const accounts = result.accounts || [];
-          accounts.push({
-              username: message.data.username,
-              password: message.data.password,
-              url: message.data.url
-          });
-
-          chrome.storage.local.set({ accounts }, () => {
-              if (chrome.runtime.lastError) {
-                  console.error("Error setting accounts:", chrome.runtime.lastError);
-                  sendResponse({ success: false, error: chrome.runtime.lastError.message });
-              } else {
-                  sendResponse({ success: true });
-                  console.log("Credentials saved:", message.data);
-              }
-          });
-      });
-      
-      return true; // Indicates asynchronous response
-  }
-});
+    if (message.type === 'saveCredentials') {
+        chrome.storage.local.get(['accounts'], (result) => {
+            const accounts = result.accounts || [];
+            
+            // Check if this account already exists to prevent duplicates
+            const existingAccountIndex = accounts.findIndex(
+                acc => acc.username === message.data.username && 
+                       acc.url === message.data.url
+            );
+  
+            if (existingAccountIndex === -1) {
+                accounts.push({
+                    username: message.data.username,
+                    password: message.data.password,
+                    url: message.data.url,
+                    favorite: false // Add favorite flag by default
+                });
+  
+                chrome.storage.local.set({ accounts }, () => {
+                    sendResponse({ success: true });
+                    console.log("Credentials saved:", message.data);
+                });
+            } else {
+                sendResponse({ success: false, message: "Account already exists" });
+            }
+        });
+        
+        return true; // For asynchronous response
+    }
+  });
 
 // Inject content script when a page loads
 chrome.webNavigation.onCompleted.addListener((details) => {

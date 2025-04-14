@@ -1,4 +1,5 @@
 // mainpage.js
+
 document.addEventListener('DOMContentLoaded', function() {
     // Modify the existing tab switching functionality
     const tabs = document.querySelectorAll('.button-65s, .tabs .active,.tab-item');
@@ -19,13 +20,87 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-
+    
+    document.getElementById('clear-storage-btn').addEventListener('click', function () {
+        const confirmation = confirm("Are you sure you want to delete all stored data? This cannot be undone.");
+        if (confirmation) {
+            chrome.storage.local.clear(() => {
+                console.log('Extension storage cleared');
+                alert('All data has been cleared.');
+                // Redirect the user to popup.html
+                window.location.href = "popup.html";
+            });
+        }
+    });
+    
     document.getElementById('cate-button').addEventListener('click', () => {
         const touchCheckbox = document.getElementById('touch');
         touchCheckbox.checked = !touchCheckbox.checked; // Toggle the checkbox state
     });
 
 
+    
+    
+      // Master Password Change Functionality
+      const saveNewPasswordButton = document.getElementById('save-new-password-btn');
+      if (saveNewPasswordButton) {
+          saveNewPasswordButton.addEventListener('click', function() {
+              const currentPasswordInput = document.getElementById('current-master-password');
+              const newPasswordInput = document.getElementById('new-master-password');
+              const confirmNewPasswordInput = document.getElementById('confirm-new-master-password');
+              
+              let errorMessageContainer = document.getElementById('master-password-error');
+              if (!errorMessageContainer) {
+                  errorMessageContainer = document.createElement('div');
+                  errorMessageContainer.id = 'master-password-error';
+                  errorMessageContainer.style.color = 'red';
+                  document.getElementById('master-password-section').appendChild(errorMessageContainer);
+              }
+  
+              errorMessageContainer.textContent = '';
+  
+              const currentPassword = currentPasswordInput ? currentPasswordInput.value : '';
+              const newPassword = newPasswordInput ? newPasswordInput.value : '';
+              const confirmNewPassword = confirmNewPasswordInput ? confirmNewPasswordInput.value : '';
+  
+              if (!currentPassword || !newPassword || !confirmNewPassword) {
+                  errorMessageContainer.textContent = 'Please fill in all fields.';
+                  return;
+              }
+  
+              chrome.storage.local.get(['masterLock'], function(result) {
+                  const storedMasterPassword = result.masterLock;
+  
+                  if (currentPassword !== storedMasterPassword) {
+                      errorMessageContainer.textContent = 'Current master password is incorrect.';
+                      return;
+                  }
+  
+                  if (newPassword !== confirmNewPassword) {
+                      errorMessageContainer.textContent = 'New passwords do not match.';
+                      return;
+                  }
+  
+                  chrome.storage.local.set({ 
+                      masterLock: newPassword 
+                  }, function() {
+                      errorMessageContainer.style.color = 'green';
+                      errorMessageContainer.textContent = 'Master password changed successfully!';
+  
+                      if (currentPasswordInput) currentPasswordInput.value = '';
+                      if (newPasswordInput) newPasswordInput.value = '';
+                      if (confirmNewPasswordInput) confirmNewPasswordInput.value = '';
+  
+                      setTimeout(() => {
+                          errorMessageContainer.textContent = '';
+                          errorMessageContainer.style.color = 'red';
+                      }, 3000);
+                  });
+              });
+          });
+      }
+  
+      
     function addFavoriteEventListeners() {
         const favoriteButtons = document.querySelectorAll('.favorite-button');
         
@@ -58,18 +133,19 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         });
     }
-    
     document.getElementById('add-account-button').addEventListener('click', function() {
         const form = document.getElementById('add-account-form');
         
         form.classList.toggle('show');
         
         if (form.classList.contains('show')) {
-            this.innerText = 'Hide';
+            this.innerHTML = '<i class="fa-solid fa-person-circle-plus"></i>';
         } else {
-            this.innerText = 'Add';
+            this.innerHTML = '<i class="fa-solid fa-user-plus"></i>';
+            
         }
     });
+    
 
     
     // Service button functionality
@@ -108,7 +184,7 @@ document.addEventListener('DOMContentLoaded', function() {
             let filteredAccounts = storedAccounts;
     
             // Add service filtering
-            if (['facebook', 'instagram', 'gmail', 'twitter', 'linkedin'].includes(filter)) {
+            if (['facebook', 'instagram', 'gmail', 'github', 'linkedin'].includes(filter)) {
                 filteredAccounts = storedAccounts.filter(account => {
                     const url = account.url.toLowerCase();
                     return url.includes(filter);
@@ -118,7 +194,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 filteredAccounts = storedAccounts.filter(account => {
                     const url = account.url.toLowerCase();
                     // Check that the URL does not match any predefined service URLs
-                    return !['facebook', 'instagram', 'gmail', 'twitter', 'linkedin'].some(service => url.includes(service));
+                    return !['facebook', 'instagram', 'gmail', 'github', 'linkedin'].some(service => url.includes(service));
                 });
             } else if (filter === 'favorites' || filter === 'favorite') {
                 filteredAccounts = storedAccounts.filter(account => account.favorite);
@@ -197,7 +273,7 @@ function getServiceIcon(url) {
     if (url.includes('facebook.com')) return 'icons/facebook.png';
     if (url.includes('gmail.com')) return 'icons/gmail.png';
     if (url.includes('instagram.com')) return 'icons/instagram.png';
-    if (url.includes('twitter.com')) return 'icons/twitter.png';
+    if (url.includes('github.com')) return 'icons/github.png';
     if (url.includes('linkedin.com')) return 'icons/linkedin.png';
 
     // Fetch the favicon from the Google Favicon API for custom URLs
@@ -244,7 +320,7 @@ function getServiceIcon(url) {
         const customUrl = document.getElementById("account-url").value;
         
         const finalUrl = selectedUrl || customUrl;
-
+        
         if (username && password && (finalUrl || customUrl)) {
             chrome.storage.local.get(['accounts'], function(result) {
                 const storedAccounts = result.accounts || [];
@@ -258,12 +334,16 @@ function getServiceIcon(url) {
                     resetForm();
                     loadAccounts();
                     
+                    // Explicitly call the function to suggest accounts
+                    detectCurrentSiteAndSuggestAccounts();
+                    
                     const form = document.getElementById('add-account-form');
                     const addButton = document.getElementById('add-account-button');
                     form.classList.toggle('show');
                     addButton.innerText = 'Add';
                 });
             });
+       
         } else {
             alert("Please fill in all required fields.");
         }
@@ -414,6 +494,109 @@ function getServiceIcon(url) {
         document.execCommand('copy');
         alert('Password copied to clipboard!');
     });
+    
+// Function to detect current site and suggest accounts for autofill
+function detectCurrentSiteAndSuggestAccounts() {
+    const existingContainer = document.getElementById('account-suggestion-container');
+    if (existingContainer) {
+        existingContainer.remove();
+    }
+
+    chrome.tabs.query({ active: true, currentWindow: true }, function(tabs) {
+        const activeTab = tabs[0];
+        const url = new URL(activeTab.url);
+        const hostname = url.hostname.replace(/^www\./, '').toLowerCase();
+    
+        chrome.storage.local.get(['accounts'], function(result) {
+            const storedAccounts = result.accounts || [];
+            
+            const suggestedAccounts = storedAccounts.filter(account => 
+                hostname.includes(account.url) || 
+                account.url.includes(hostname)
+            );
+    
+            const accountSuggestionContainer = document.createElement('div');
+            accountSuggestionContainer.id = 'account-suggestion-container';
+            
+            // Create a header with title, website logo, and hide button
+        const headerContainer = document.createElement('div');
+        headerContainer.classList.add('suggestion-header');
+        
+        // Create favicon/logo for the current website
+        const websiteLogo = document.createElement('img');
+        websiteLogo.src = `https://logo.clearbit.com/${hostname}?size=32`;
+        websiteLogo.alt = `${hostname} logo`;
+        websiteLogo.classList.add('current-site-logo');
+        websiteLogo.onerror = function() {
+            // Fallback to default favicon if Clearbit logo fails
+            this.src = `https://www.google.com/s2/favicons?domain=${hostname}&sz=32`;
+        };
+
+
+
+        headerContainer.innerHTML = `
+        <div class="suggestion-header-content">
+            <div class="logo-and-title">
+                <img id="current-site-logo" class="current-site-logo" src="${websiteLogo.src}" alt="${hostname} logo">
+                <h3>Suggested Accounts</h3>
+            </div>
+            <button id="hide-suggestions-button" class="hide-suggestions-btn">
+                <i class="fa-solid fa-times"></i>
+            </button>
+        </div>
+    `;
+            
+          
+        
+        accountSuggestionContainer.appendChild(headerContainer);
+
+   
+            if (suggestedAccounts.length > 0) {
+                const suggestionList = document.createElement('ul');
+                suggestionList.classList.add('suggestion-list');
+
+                suggestedAccounts.forEach((account, index) => {
+                    const suggestionItem = document.createElement('li');
+                    suggestionItem.innerHTML = `
+                        <span>${account.username}</span>
+                        <button class="autofill-suggestion-button" data-index="${storedAccounts.indexOf(account)}">
+                            <i class="fa-solid fa-fill"></i>
+                        </button>
+                    `;
+                    suggestionList.appendChild(suggestionItem);
+                });
+
+                accountSuggestionContainer.appendChild(suggestionList);
+                
+                // Insert the suggestion container before the search input
+                const searchContainer = document.querySelector('.search-container');
+                if (searchContainer) {
+                    searchContainer.insertAdjacentElement('beforebegin', accountSuggestionContainer);
+                }
+
+                    // Add hide button event listener
+                    const hideSuggestionsButton = document.getElementById('hide-suggestions-button');
+                    hideSuggestionsButton.addEventListener('click', function() {
+                        accountSuggestionContainer.style.display = 'none';
+                    });
+
+                // Add event listeners to autofill suggestion buttons
+                document.querySelectorAll('.autofill-suggestion-button').forEach(button => {
+                    button.addEventListener('click', function() {
+                        autofillAccountInTab(this.dataset.index);
+                        
+
+
+                    });
+                });
+            }
+        });
+    });
+}
+detectCurrentSiteAndSuggestAccounts()
+
+
+
 
     const searchInput = document.getElementById('search-input');
     searchInput.addEventListener('input', (e) => {

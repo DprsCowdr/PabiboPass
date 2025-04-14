@@ -22,6 +22,16 @@ ul.slide a {
     font-weight: bold;
 }
 
+
+
+.accounts-section ,.accSec {
+  margin-top: 10px;
+  background-color: #f8f9ff;
+  border-radius: 12px;
+  padding: 12px;
+  margin-bottom: 16px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
 ul.slide a:hover {
     background-color: #ccc;
 }
@@ -54,7 +64,7 @@ ul.slide a:hover {
 
   
 body {
-    width: 396px;
+    width: 390px;
     margin: 0;
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     background-color: rgb(255, 255, 255);
@@ -87,7 +97,7 @@ body {
 .icon-text-container {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 40px;
     flex-wrap: nowrap; /* Prevents wrapping */
 }
 
@@ -111,6 +121,7 @@ body {
     margin-bottom: 24px;
     width: 100%;
   }
+
   
   #search-input {
     width: 100%;
@@ -235,6 +246,7 @@ body {
     align-items: center;
     gap: 10px;
     padding: 10px;
+    
 }
 
 /* Buttons */
@@ -245,6 +257,7 @@ body {
     border: none; /* Remove borders */
     cursor: pointer;
     display: flex;
+    
     justify-content: center; /* Center image horizontally */
     align-items: center; /* Center image vertically */
 }
@@ -255,6 +268,7 @@ body {
     height: 30px; /* Icon height */
     object-fit: contain; /* Keep aspect ratio */
 }
+
 
 /* Priority Section */
 .priority-title {
@@ -369,7 +383,38 @@ body {
 .delete-button svg {
   color: #ff4444;
 }
+#master-password-change-form {
+    clear: both;
+    width: 100%;
+    height: 0;
+    overflow: hidden;
+    text-align: center;
+    transition: height 0.4s ease;
+    padding-top: 20px;
+    box-sizing: border-box;
+}
 
+#master-password-toggle:checked + label + #master-password-change-form {
+    height: 250px; /* Adjust height to fit the content */
+}
+
+#master-password-change-form input[type="password"] {
+    width: 80%; /* Adjust width for consistent alignment */
+    max-width: 400px; /* Set a maximum width */
+    margin: 10px auto; /* Space between inputs */
+    padding: 10px;
+    border: 1px solid #ccc; /* Border for better visibility */
+    border-radius: 5px;
+    font-size: 16px;
+    display: block; /* Ensures each input is on a new line */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow for input fields */
+}
+
+#master-password-change-form input[type="password"]:focus {
+    border-color: #007bff; /* Highlight on focus */
+    outline: none;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Glow effect */
+}
 .custom-input {
   width: 90%;
   padding: 10px 12px;
@@ -448,7 +493,7 @@ label[for="touch"] {
     text-align: center;
 }
 
-.button-65,
+.button-65, 
 .button-65s{
   min-width: 81px;
   padding: 10px 30px;
@@ -610,3 +655,273 @@ label[for="touch"] {
 
 
 
+
+
+.button-65-icon {
+    display: inline-block;
+    padding: 10px; /* Keep padding size */
+    border-radius: 5px; /* Smaller, rounded corners */
+    background: radial-gradient(
+        ellipse at bottom,
+        rgba(71, 81, 92, 1) 0%,
+        rgba(11, 21, 30, 1) 45%
+    ); /* Gradient design */
+    border: 1px solid #ccc; /* Light border for structure */
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Subtle shadow */
+    text-align: center;
+}
+
+/* Add the glow effect for hover */
+.button-65-icon::before {
+    content: "";
+    width: 70%;
+    height: 1px;
+    position: absolute;
+    bottom: 0;
+    left: 15%;
+    background: linear-gradient(
+        90deg,
+        rgba(255, 255, 255, 0) 0%,
+        rgba(255, 255, 255, 1) 50%,
+        rgba(255, 255, 255, 0) 100%
+    );
+    opacity: 0.2;
+    transition: all 1s cubic-bezier(0.15, 0.83, 0.66, 1);
+}
+
+/* Hover state */
+.button-65-icon:hover {
+    background-color: #0056b3; /* Slightly darker blue on hover */
+    transform: scale(1.05) translateY(-2px); /* Slight enlargement and lift */
+    color: rgba(255, 255, 255, 1); /* Brighten text */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); /* Stronger shadow on hover */
+}
+
+.button-65-icon:hover::before {
+    opacity: 1; /* Make the glow line visible */
+}
+
+/* Styling for the padlock icon inside the button */
+.button-65-icon img.padlock-icon {
+    width: 20px;
+    height: 20px;
+    vertical-align: middle;
+    filter: invert(1); /* Optional: Makes the icon white for dark backgrounds */
+}
+
+.suggestion-list li span {
+  color: #333;
+  font-weight: 500;
+  margin-left: 10px;
+}
+
+.autofill-suggestion-button:focus {
+  outline: 4px solid #000000;
+  outline-offset: 2px;
+}
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+#account-suggestion-container {
+  animation: fadeIn 0.4s ease forwards;
+}
+@media (max-width: 390px) {
+  body {
+      width: 100%;
+      padding: 10px;
+  }
+
+  .suggestion-list li {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 8px;
+  }
+}
+/* Enhance the account suggestion container */
+#account-suggestion-container {
+  background-color: #f8f9ff;
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 16px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+#account-suggestion-container h3 {
+  margin: 0 0 12px 0;
+  color: #222222d0;
+  font-size: 18px;
+}
+
+.suggestion-list {
+  list-style-type: none;
+  padding: 0;
+}
+
+.suggestion-list li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: white;
+  border-radius: 8px;
+  padding: 10px;
+  margin-bottom: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  transition: background-color 0.3s ease;
+}
+
+.suggestion-list li:hover {
+  background-color: #f5f5f5;
+}
+
+.autofill-suggestion-button {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  transition: background-color 0.3s ease;
+}
+
+.autofill-suggestion-button:hover {
+  background-color: #ccc;
+}
+
+.autofill-suggestion-button i {
+  color: #000000;
+  font-size: 15px;
+}
+.account-suggestion-popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  width: 300px;
+  max-height: 80vh;
+  overflow-y: auto;
+  z-index: 100;
+  display: none;
+}
+
+.popup-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #f0f0f0;
+  padding: 16px;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+}
+
+.popup-header h3 {
+  margin: 0;
+}
+
+.close-button {
+  background-color: transparent;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.popup-content {
+  padding: 16px;
+}
+
+.suggestion-list {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.suggestion-list li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+#account-suggestion-container .suggestion-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 5px 10px;
+}
+
+#hide-suggestions-button {
+  background: none;
+  border: none;
+  color: #888;
+  cursor: pointer;
+  transition: color 0.3s ease;
+  padding-left: 40px;
+  
+
+  
+}
+
+#hide-suggestions-button:hover {
+  color: #000000;
+}
+
+#account-suggestion-container .suggestion-header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 5px 10px;
+}
+
+#account-suggestion-container .logo-and-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  
+}
+
+.current-site-logo {
+  width: 25x;
+  height: 25px;
+  
+ 
+}
+
+#hide-suggestions-button {
+  background: none;
+  border: none;
+  color: #888;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+#hide-suggestions-button:hover {
+  color: #333;
+}
+
+.create{
+  min-width: 50px;
+  padding: 0px 3px;
+  background-color: transparent;
+  border: none;
+  transition: all 0.5s ease;
+  background: radial-gradient(
+    ellipse at bottom,
+    rgba(71, 81, 92, 1) 0%,
+    rgba(11, 21, 30, 1) 45%
+  );
+}
+
+  .create:hover{
+    background-color: rgba(255, 255, 255, 0.832);
+    transform: scale(1.05) translateY(-2px);
+  }
